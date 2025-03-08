@@ -33,5 +33,5 @@ substitutions:
     _FUNCTION_PROJECT_ID : project-cicd-management  # Replace with actual Project ID
     _FUNCTION_NAME    : my-nodejs-app
     _FUNCTION_REGION  : us-central1
-    _FUNCTION_RUNTIME : nodejs22
+    _FUNCTION_RUNTIME : nodejs20
     _ENTRY_POINT      : helloWorld
