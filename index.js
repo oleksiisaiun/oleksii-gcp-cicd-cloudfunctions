@@ -1,8 +1,5 @@
-//-----------------------------------------------------------------------------
-// NodeJS App for GCP Cloud Functions deployed via GCP Cloud Build Triggers
-//-----------------------------------------------------------------------------
+const functions = require('@google-cloud/functions-framework');
 
-exports.helloWorld = (req, res) => {
-  const message="<font color='blue'>СloudFunction of Denis Astahov!v 00.2</font><br><b>App Version 1.1</b>";
-  res.status(200).send(message);
-};
+functions.http('helloWorld', (req, res) => {
+  res.send(`Hello ${req.query.name || req.body.name || 'World in Staging v2'}!`);
+});
