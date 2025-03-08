@@ -24,6 +24,9 @@ steps:
   - --entry-point=$_ENTRY_POINT
   id: DEPLOY
 
+options:
+  logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
+  
 substitutions:
     _FUNCTION_PROJECT : Project--CICD-STAGING
     _FUNCTION_NAME    : my-nodejs-app
