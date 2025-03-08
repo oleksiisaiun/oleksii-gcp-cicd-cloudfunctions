@@ -22,9 +22,22 @@ steps:
   - --runtime=$_FUNCTION_RUNTIME
   - --project=$_FUNCTION_PROJECT_ID
   - --entry-point=$_ENTRY_POINT
-  - --no-gen2  # ✅ Force deployment as Gen1 (avoids Cloud Run conflicts)
-  - --quiet  # ✅ Avoids interactive prompts (e.g., unauthenticated access questions)
+  - --no-gen2  # ✅ Force Gen1 deployment (avoids Cloud Run conflicts)
+  - --quiet  # ✅ Avoids interactive prompts (e.g., unauthenticated access)
   id: DEPLOY
+
+# ✅ Step to grant public access to the function after deployment
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - add-iam-policy-binding
+  - $_FUNCTION_NAME
+  - --region=$_FUNCTION_REGION
+  - --member=allUsers
+  - --role=roles/cloudfunctions.invoker
+  - --project=$_FUNCTION_PROJECT_ID
+  id: GRANT_PUBLIC_ACCESS
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
@@ -33,5 +46,5 @@ substitutions:
     _FUNCTION_PROJECT_ID : project-cicd-management  # Replace with actual Project ID
     _FUNCTION_NAME    : my-nodejs-app
     _FUNCTION_REGION  : us-central1
-    _FUNCTION_RUNTIME : nodejs20
+    _FUNCTION_RUNTIME : nodejs20  # ✅ Use a supported Node.js version
     _ENTRY_POINT      : helloWorld
