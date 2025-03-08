@@ -22,13 +22,12 @@ steps:
   - --runtime=$_FUNCTION_RUNTIME
   - --project=$_FUNCTION_PROJECT_ID
   - --entry-point=$_ENTRY_POINT
-  - --update-labels=deployment=update  # ✅ Allows overriding the existing function
-  - --quiet  # ✅ Avoids interactive prompts (like 'Allow unauthenticated invocations?')
+  - --no-gen2  # ✅ Force deployment as Gen1 (avoids Cloud Run conflicts)
+  - --quiet  # ✅ Avoids interactive prompts (e.g., unauthenticated access questions)
   id: DEPLOY
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
-
   
 substitutions:
     _FUNCTION_PROJECT_ID : project-cicd-management  # Replace with actual Project ID
