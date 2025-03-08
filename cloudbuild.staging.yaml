@@ -28,6 +28,7 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
+
   
 substitutions:
     _FUNCTION_PROJECT_ID : project-cicd-management  # Replace with actual Project ID
