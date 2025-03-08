@@ -9,19 +9,7 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args: ['echo', 'Testing...']
   id: TEST  
-
-# ✅ Step to grant IAM permissions to Cloud Build before deploying the function
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gcloud
-  - projects
-  - add-iam-policy-binding
-  - $_FUNCTION_PROJECT_ID
-  - --member=serviceAccount:$_CLOUD_BUILD_SERVICE_ACCOUNT
-  - --role=roles/cloudfunctions.admin
-  id: GRANT_IAM_PERMISSIONS
-
-# ✅ Deploy the Cloud Function
+  
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   args:
   - gcloud
@@ -38,7 +26,12 @@ steps:
   - --quiet  # ✅ Avoids interactive prompts (e.g., unauthenticated access)
   id: DEPLOY
 
-# ✅ Step to make the function publicly accessible after deployment
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gc
+options:
+  logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
+  
+substitutions:
+    _FUNCTION_PROJECT_ID : project-cicd-management  # Replace with actual Project ID
+    _FUNCTION_NAME    : my-nodejs-app
+    _FUNCTION_REGION  : us-central1
+    _FUNCTION_RUNTIME : nodejs20  # ✅ Use a supported Node.js version
+    _ENTRY_POINT      : helloWorld
