@@ -28,7 +28,7 @@ options:
   logging: CLOUD_LOGGING_ONLY  # Ensures logs are only sent to Cloud Logging
   
 substitutions:
-    _FUNCTION_PROJECT : Project--CICD-STAGING
+    _FUNCTION_PROJECT : 748408628490
     _FUNCTION_NAME    : my-nodejs-app
     _FUNCTION_REGION  : us-central1
     _FUNCTION_RUNTIME : nodejs22
